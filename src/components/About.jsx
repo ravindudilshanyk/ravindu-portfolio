@@ -69,7 +69,7 @@ export default function About() {
                   key: "University",
                   val: "Uva Wellassa University of Sri Lanka",
                 },
-                // { icon: "📊", key: "GPA", val: "3.39 / 4.0" },
+                { icon: "📊", key: "GPA", val: "3.39 / 4.0" },
                 {
                   icon: "🔍",
                   key: "Status",
