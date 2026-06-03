@@ -12,14 +12,7 @@ export default function About() {
             WHO I <span>AM</span>
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 64,
-              alignItems: "start",
-            }}
-          >
+          <div className="about-grid">
             {/* Left */}
             <div>
               <p
@@ -69,7 +62,6 @@ export default function About() {
                 real things, not just side-project demos.
               </p>
 
-              {/* Quick facts */}
               {[
                 { icon: "📍", key: "Location", val: personal.location },
                 {
@@ -77,6 +69,7 @@ export default function About() {
                   key: "University",
                   val: "Uva Wellassa University of Sri Lanka",
                 },
+                // { icon: "📊", key: "GPA", val: "3.39 / 4.0" },
                 {
                   icon: "🔍",
                   key: "Status",
@@ -84,47 +77,16 @@ export default function About() {
                 },
                 { icon: "📞", key: "Phone", val: personal.phone },
               ].map((f) => (
-                <div
-                  key={f.key}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 14,
-                    padding: "11px 16px",
-                    marginBottom: 8,
-                    background: "var(--surface)",
-                    borderLeft: "3px solid var(--red)",
-                    border: "1px solid var(--border)",
-                  }}
-                >
+                <div key={f.key} className="about-fact-row">
                   <span style={{ fontSize: 15 }}>{f.icon}</span>
-                  <span
-                    style={{
-                      fontSize: 11,
-                      color: "var(--muted)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.08em",
-                      minWidth: 80,
-                    }}
-                  >
-                    {f.key}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: 14,
-                      color: "var(--text)",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {f.val}
-                  </span>
+                  <span className="about-fact-key">{f.key}</span>
+                  <span className="about-fact-val">{f.val}</span>
                 </div>
               ))}
             </div>
 
             {/* Right */}
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              {/* Passions */}
               {[
                 {
                   title: "Full Stack Development",
@@ -278,8 +240,51 @@ export default function About() {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          #about .section-wrap > div:last-child { grid-template-columns: 1fr !important; gap: 32px !important; }
+        .about-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 64px;
+          align-items: start;
+        }
+        .about-fact-row {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 11px 16px;
+          margin-bottom: 8px;
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-left: 3px solid var(--red);
+        }
+        .about-fact-key {
+          font-size: 11px;
+          color: var(--muted);
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          min-width: 80px;
+          flex-shrink: 0;
+        }
+        .about-fact-val {
+          font-size: 13px;
+          color: var(--text);
+          font-weight: 500;
+          word-break: break-word;
+        }
+
+        /* Tablet */
+        @media (max-width: 900px) {
+          .about-grid {
+            grid-template-columns: 1fr !important;
+            gap: 32px !important;
+          }
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+          #about .section-wrap { padding: 64px 20px !important; }
+          .about-fact-row { flex-wrap: wrap; gap: 8px; }
+          .about-fact-key { min-width: 60px; }
+          .about-fact-val { font-size: 12px; }
         }
       `}</style>
     </section>

@@ -84,7 +84,7 @@ export default function Hero() {
           <div className="hero-stats-inline">
             {[
               { num: "5+", label: "Projects" },
-              { num: "3.39", label: "GPA / 4.0" },
+              // { num: "3.39", label: "GPA / 4.0" },
               { num: "10+", label: "Tech Stacks" },
             ].map((s) => (
               <div key={s.label} className="hero-stat-inline">

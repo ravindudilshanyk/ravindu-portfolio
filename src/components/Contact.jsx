@@ -15,6 +15,7 @@ const STATUS = {
 };
 
 export default function Contact() {
+  const ref = useScrollAnimation();
   const [status, setStatus] = useState(STATUS.IDLE);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -49,11 +50,8 @@ export default function Contact() {
       alert("Please enter a valid email address.");
       return;
     }
-
     setStatus(STATUS.SENDING);
-
     try {
-      // emailjs.send() — no form element needed, just a plain object
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
@@ -102,8 +100,6 @@ export default function Contact() {
     },
   ];
 
-  const ref = useScrollAnimation();
-
   return (
     <section id="contact">
       <div className="section-wrap">
@@ -113,14 +109,7 @@ export default function Contact() {
             GET IN <span>TOUCH</span>
           </div>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 64,
-              alignItems: "start",
-            }}
-          >
+          <div className="contact-grid">
             {/* ── Left: info cards ── */}
             <div>
               <p
@@ -135,7 +124,10 @@ export default function Contact() {
                 <strong style={{ color: "var(--text)" }}>
                   Software Engineering Internship
                 </strong>{" "}
-                and <strong style={{ color: "var(--text)" }}>Full Stack Developer Internship</strong>{" "}
+                and{" "}
+                <strong style={{ color: "var(--text)" }}>
+                  Full Stack Developer
+                </strong>{" "}
                 opportunities. If you have a project, an opening, or just want
                 to talk code — reach out.
               </p>
@@ -149,25 +141,7 @@ export default function Contact() {
                     href={c.href}
                     target={c.href.startsWith("http") ? "_blank" : undefined}
                     rel="noreferrer"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 16,
-                      background: "var(--surface)",
-                      border: "1px solid var(--border)",
-                      borderLeft: "3px solid var(--red)",
-                      padding: "16px 20px",
-                      textDecoration: "none",
-                      transition: "background 0.2s, transform 0.15s",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "var(--surface2)";
-                      e.currentTarget.style.transform = "translateX(4px)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "var(--surface)";
-                      e.currentTarget.style.transform = "translateX(0)";
-                    }}
+                    className="contact-card"
                   >
                     <span
                       style={{
@@ -197,6 +171,7 @@ export default function Contact() {
                           fontSize: 14,
                           color: "var(--text)",
                           fontWeight: 500,
+                          wordBreak: "break-all",
                         }}
                       >
                         {c.val}
@@ -277,7 +252,6 @@ export default function Contact() {
                       disabled={status === STATUS.SENDING}
                     />
                   </div>
-
                   <div>
                     <div
                       style={{
@@ -301,7 +275,6 @@ export default function Contact() {
                       disabled={status === STATUS.SENDING}
                     />
                   </div>
-
                   <div>
                     <div
                       style={{
@@ -373,8 +346,43 @@ export default function Contact() {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          #contact .section-wrap > div { grid-template-columns: 1fr !important; gap: 32px !important; }
+        .contact-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 64px;
+          align-items: start;
+        }
+        .contact-card {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-left: 3px solid var(--red);
+          padding: 16px 20px;
+          text-decoration: none;
+          transition: background 0.2s, transform 0.15s;
+        }
+        .contact-card:hover {
+          background: var(--surface2);
+          transform: translateX(4px);
+        }
+
+        /* Tablet */
+        @media (max-width: 900px) {
+          .contact-grid {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+          #contact .section-wrap { padding: 64px 20px !important; }
+          .contact-card { padding: 12px 14px; gap: 12px; }
+          .contact-card > span { font-size: 15px !important; }
+          .contact-card div > div:last-child { font-size: 12px !important; }
+          .btn-primary { width: 100%; justify-content: center; }
         }
       `}</style>
     </section>
