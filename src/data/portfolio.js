@@ -8,7 +8,7 @@ export const personal = {
   github: "https://github.com/ravindudilshanyk",
   location: "Ambalangoda, Sri Lanka",
   summary:
-    "Final-year Computer Science & Technology undergraduate at Uva Wellassa University of Sri Lanka with hands-on experience designing and building full-stack web and desktop applications. Proficient in React.js, Node.js, Express.js, PostgreSQL, and TypeScript. Seeking a Software Engineering Internship or Junior Software Engineer role.",
+    "Final-year Computer Science & Technology undergraduate at Uva Wellassa University of Sri Lanka with hands-on experience designing and building full-stack web and desktop applications. Proficient in React.js, Node.js, Express.js, PostgreSQL, and TypeScript. Seeking a Software Engineering Internship or Full Stack Developer role.",
 };
 
 export const skills = {

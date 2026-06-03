@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { projects } from "../data/portfolio";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 function ProjectCard({ project }) {
   const [hovered, setHovered] = useState(false);
-
   return (
     <div
       onMouseEnter={() => setHovered(true)}
@@ -233,24 +233,27 @@ function ProjectCard({ project }) {
 }
 
 export default function Projects() {
+  const ref = useScrollAnimation();
   return (
     <section id="projects" style={{ background: "var(--bg2)" }}>
       <div className="section-wrap">
-        <div className="sec-label">03 — Work</div>
-        <div className="sec-title">
-          SELECTED <span>PROJECTS</span>
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
-            gap: 2,
-            background: "var(--border)",
-          }}
-        >
-          {projects.map((p) => (
-            <ProjectCard key={p.num} project={p} />
-          ))}
+        <div ref={ref} className="scroll-fade">
+          <div className="sec-label">03 — Work</div>
+          <div className="sec-title">
+            SELECTED <span>PROJECTS</span>
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+              gap: 2,
+              background: "var(--border)",
+            }}
+          >
+            {projects.map((p) => (
+              <ProjectCard key={p.num} project={p} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { personal } from "../data/portfolio";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 const USERNAME = "ravindudilshanyk";
 const CONTRIB_API = `https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`;
@@ -35,6 +36,8 @@ const LANG_COLORS = {
 };
 
 export default function Github() {
+  const ref = useScrollAnimation();
+
   const gridRef = useRef(null);
   const monthRef = useRef(null);
 
@@ -175,225 +178,233 @@ export default function Github() {
   return (
     <section id="github" style={{ background: "var(--bg2)" }}>
       <div className="section-wrap">
-        <div className="sec-label">05 — GitHub</div>
-        <div className="sec-title">
-          CONTRIBUTION <span>GRAPH</span>
-        </div>
-
-        {/* ── Stats row ──────────────────────────────────────────────────── */}
-        <div
-          style={{
-            display: "flex",
-            gap: 2,
-            marginBottom: 40,
-            background: "var(--border)",
-            flexWrap: "wrap",
-          }}
-        >
-          {statCards.map((s) => (
-            <div
-              key={s.label}
-              style={{
-                background: "var(--bg2)",
-                padding: "18px 28px",
-                flex: 1,
-                minWidth: 110,
-                textAlign: "center",
-              }}
-            >
-              <div
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: 34,
-                  color: "var(--text)",
-                  lineHeight: 1,
-                }}
-              >
-                {loading ? <span style={{ opacity: 0.3 }}>—</span> : s.num}
-              </div>
-              <div
-                style={{
-                  fontSize: 11,
-                  color: "var(--muted)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.08em",
-                  marginTop: 4,
-                }}
-              >
-                {s.label}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* ── Heatmap label ──────────────────────────────────────────────── */}
-        <div
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 11,
-            color: "var(--muted)",
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            marginBottom: 12,
-          }}
-        >
-          Activity — last 12 months ·{" "}
-          <a
-            href={personal.github}
-            target="_blank"
-            rel="noreferrer"
-            style={{ color: "var(--red)", fontSize: 11 }}
-          >
-            github.com/{USERNAME}
-          </a>
-        </div>
-
-        {error && (
-          <div
-            style={{
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
-              borderLeft: "3px solid var(--red)",
-              padding: "14px 18px",
-              color: "var(--muted)",
-              fontSize: 13,
-              marginBottom: 16,
-            }}
-          >
-            ⚠ Could not load GitHub data. Check your connection and try again.
-          </div>
-        )}
-
-        {/* ── Heatmap — ALWAYS rendered so refs attach before data arrives ── */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            width: "100%",
-            visibility: gridReady
-              ? "visible"
-              : "hidden" /* hide until cells painted */,
-            minHeight: gridReady ? "auto" : 120,
-          }}
-        >
-          <div style={{ overflowX: "auto", width: "100%", paddingBottom: 8 }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <div style={{ display: "inline-flex", flexDirection: "column" }}>
-                {/* refs — always in DOM */}
-                <div
-                  ref={monthRef}
-                  style={{ display: "flex", gap: 3, marginBottom: 4 }}
-                />
-                <div
-                  ref={gridRef}
-                  style={{ display: "flex", gap: 3, alignItems: "flex-start" }}
-                />
-              </div>
-            </div>
+        <div ref={ref} className="scroll-fade">
+          <div className="sec-label">05 — GitHub</div>
+          <div className="sec-title">
+            CONTRIBUTION <span>GRAPH</span>
           </div>
 
-          {/* Legend */}
+          {/* ── Stats row ──────────────────────────────────────────────────── */}
           <div
             style={{
               display: "flex",
-              alignItems: "center",
-              gap: 6,
-              marginTop: 10,
-              fontSize: 11,
-              color: "var(--muted)",
+              gap: 2,
+              marginBottom: 40,
+              background: "var(--border)",
+              flexWrap: "wrap",
             }}
           >
-            <span>Less</span>
-            {LEVEL_COLORS.map((c) => (
+            {statCards.map((s) => (
               <div
-                key={c}
+                key={s.label}
                 style={{
-                  width: 13,
-                  height: 13,
-                  borderRadius: 2,
-                  background: c,
+                  background: "var(--bg2)",
+                  padding: "18px 28px",
+                  flex: 1,
+                  minWidth: 110,
+                  textAlign: "center",
                 }}
-              />
+              >
+                <div
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: 34,
+                    color: "var(--text)",
+                    lineHeight: 1,
+                  }}
+                >
+                  {loading ? <span style={{ opacity: 0.3 }}>—</span> : s.num}
+                </div>
+                <div
+                  style={{
+                    fontSize: 11,
+                    color: "var(--muted)",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    marginTop: 4,
+                  }}
+                >
+                  {s.label}
+                </div>
+              </div>
             ))}
-            <span>More</span>
           </div>
-        </div>
 
-        {/* Loading pulse — shown while invisible */}
-        {loading && !error && (
+          {/* ── Heatmap label ──────────────────────────────────────────────── */}
           <div
             style={{
-              textAlign: "center",
-              color: "var(--muted)",
               fontFamily: "var(--font-mono)",
-              fontSize: 12,
-              padding: "12px 0",
+              fontSize: 11,
+              color: "var(--muted)",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              marginBottom: 12,
             }}
           >
-            Loading contribution data...
+            Activity — last 12 months ·{" "}
+            <a
+              href={personal.github}
+              target="_blank"
+              rel="noreferrer"
+              style={{ color: "var(--red)", fontSize: 11 }}
+            >
+              github.com/{USERNAME}
+            </a>
           </div>
-        )}
 
-        {/* ── Language breakdown ─────────────────────────────────────────── */}
-        <div
-          style={{
-            display: "flex",
-            gap: 2,
-            marginTop: 32,
-            background: "var(--border)",
-            flexWrap: "wrap",
-          }}
-        >
-          {displayLangs.map((l) => (
+          {error && (
             <div
-              key={l.name}
               style={{
-                background: "var(--bg2)",
-                padding: "14px 20px",
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                flex: 1,
-                minWidth: 130,
+                background: "var(--surface)",
+                border: "1px solid var(--border)",
+                borderLeft: "3px solid var(--red)",
+                padding: "14px 18px",
+                color: "var(--muted)",
+                fontSize: 13,
+                marginBottom: 16,
               }}
             >
+              ⚠ Could not load GitHub data. Check your connection and try again.
+            </div>
+          )}
+
+          {/* ── Heatmap — ALWAYS rendered so refs attach before data arrives ── */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "100%",
+              visibility: gridReady
+                ? "visible"
+                : "hidden" /* hide until cells painted */,
+              minHeight: gridReady ? "auto" : 120,
+            }}
+          >
+            <div style={{ overflowX: "auto", width: "100%", paddingBottom: 8 }}>
               <div
                 style={{
-                  width: 10,
-                  height: 10,
-                  borderRadius: "50%",
-                  background: l.color,
-                  flexShrink: 0,
-                }}
-              />
-              <div
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 12,
-                  color: "var(--text)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
               >
-                {l.name}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: 22,
-                  color: "var(--red)",
-                  marginLeft: "auto",
-                }}
-              >
-                {l.pct}%
+                <div
+                  style={{ display: "inline-flex", flexDirection: "column" }}
+                >
+                  {/* refs — always in DOM */}
+                  <div
+                    ref={monthRef}
+                    style={{ display: "flex", gap: 3, marginBottom: 4 }}
+                  />
+                  <div
+                    ref={gridRef}
+                    style={{
+                      display: "flex",
+                      gap: 3,
+                      alignItems: "flex-start",
+                    }}
+                  />
+                </div>
               </div>
             </div>
-          ))}
+
+            {/* Legend */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                marginTop: 10,
+                fontSize: 11,
+                color: "var(--muted)",
+              }}
+            >
+              <span>Less</span>
+              {LEVEL_COLORS.map((c) => (
+                <div
+                  key={c}
+                  style={{
+                    width: 13,
+                    height: 13,
+                    borderRadius: 2,
+                    background: c,
+                  }}
+                />
+              ))}
+              <span>More</span>
+            </div>
+          </div>
+
+          {/* Loading pulse — shown while invisible */}
+          {loading && !error && (
+            <div
+              style={{
+                textAlign: "center",
+                color: "var(--muted)",
+                fontFamily: "var(--font-mono)",
+                fontSize: 12,
+                padding: "12px 0",
+              }}
+            >
+              Loading contribution data...
+            </div>
+          )}
+
+          {/* ── Language breakdown ─────────────────────────────────────────── */}
+          <div
+            style={{
+              display: "flex",
+              gap: 2,
+              marginTop: 32,
+              background: "var(--border)",
+              flexWrap: "wrap",
+            }}
+          >
+            {displayLangs.map((l) => (
+              <div
+                key={l.name}
+                style={{
+                  background: "var(--bg2)",
+                  padding: "14px 20px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  flex: 1,
+                  minWidth: 130,
+                }}
+              >
+                <div
+                  style={{
+                    width: 10,
+                    height: 10,
+                    borderRadius: "50%",
+                    background: l.color,
+                    flexShrink: 0,
+                  }}
+                />
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 12,
+                    color: "var(--text)",
+                  }}
+                >
+                  {l.name}
+                </div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: 22,
+                    color: "var(--red)",
+                    marginLeft: "auto",
+                  }}
+                >
+                  {l.pct}%
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

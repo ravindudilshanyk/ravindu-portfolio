@@ -48,7 +48,7 @@ export default function Hero() {
         <div className="hero-left">
           <div className="hero-tag">
             <span className="hero-tag-line" />
-            Available for Internship &amp; Junior Roles
+            Available for Internship &amp; Full Stack Developer Roles
           </div>
 
           <h1 className="hero-name">
@@ -70,6 +70,14 @@ export default function Hero() {
             </a>
             <a className="btn-outline" href={`mailto:${personal.email}`}>
               Get In Touch
+            </a>
+            <a
+              className="btn-outline"
+              href="/Ravindu_Dilshan_CV.pdf"
+              download="Ravindu_Dilshan_Karunathilaka_Software_Engineer.pdf"
+              style={{ display: "flex", alignItems: "center", gap: 8 }}
+            >
+              ↓ Download CV
             </a>
           </div>
 

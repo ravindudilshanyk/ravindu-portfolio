@@ -1,6 +1,7 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { personal } from "../data/portfolio";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -101,264 +102,272 @@ export default function Contact() {
     },
   ];
 
+  const ref = useScrollAnimation();
+
   return (
     <section id="contact">
       <div className="section-wrap">
-        <div className="sec-label">06 — Contact</div>
-        <div className="sec-title">
-          GET IN <span>TOUCH</span>
-        </div>
+        <div ref={ref} className="scroll-fade">
+          <div className="sec-label">06 — Contact</div>
+          <div className="sec-title">
+            GET IN <span>TOUCH</span>
+          </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: 64,
-            alignItems: "start",
-          }}
-        >
-          {/* ── Left: info cards ── */}
-          <div>
-            <p
-              style={{
-                color: "var(--muted)",
-                fontSize: 15,
-                lineHeight: 1.85,
-                marginBottom: 32,
-              }}
-            >
-              I'm actively looking for{" "}
-              <strong style={{ color: "var(--text)" }}>
-                Software Engineering internship
-              </strong>{" "}
-              and <strong style={{ color: "var(--text)" }}>Junior SE</strong>{" "}
-              opportunities. If you have a project, an opening, or just want to
-              talk code — reach out.
-            </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 64,
+              alignItems: "start",
+            }}
+          >
+            {/* ── Left: info cards ── */}
+            <div>
+              <p
+                style={{
+                  color: "var(--muted)",
+                  fontSize: 15,
+                  lineHeight: 1.85,
+                  marginBottom: 32,
+                }}
+              >
+                I'm actively looking for{" "}
+                <strong style={{ color: "var(--text)" }}>
+                  Software Engineering Internship
+                </strong>{" "}
+                and <strong style={{ color: "var(--text)" }}>Full Stack Developer Internship</strong>{" "}
+                opportunities. If you have a project, an opening, or just want
+                to talk code — reach out.
+              </p>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              {contactCards.map((c) => (
-                <a
-                  key={c.label}
-                  href={c.href}
-                  target={c.href.startsWith("http") ? "_blank" : undefined}
-                  rel="noreferrer"
+              <div
+                style={{ display: "flex", flexDirection: "column", gap: 12 }}
+              >
+                {contactCards.map((c) => (
+                  <a
+                    key={c.label}
+                    href={c.href}
+                    target={c.href.startsWith("http") ? "_blank" : undefined}
+                    rel="noreferrer"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 16,
+                      background: "var(--surface)",
+                      border: "1px solid var(--border)",
+                      borderLeft: "3px solid var(--red)",
+                      padding: "16px 20px",
+                      textDecoration: "none",
+                      transition: "background 0.2s, transform 0.15s",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = "var(--surface2)";
+                      e.currentTarget.style.transform = "translateX(4px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "var(--surface)";
+                      e.currentTarget.style.transform = "translateX(0)";
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "var(--red)",
+                        fontSize: 18,
+                        minWidth: 24,
+                        textAlign: "center",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {c.icon}
+                    </span>
+                    <div>
+                      <div
+                        style={{
+                          fontSize: 11,
+                          color: "var(--muted)",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.08em",
+                          marginBottom: 2,
+                        }}
+                      >
+                        {c.label}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 14,
+                          color: "var(--text)",
+                          fontWeight: 500,
+                        }}
+                      >
+                        {c.val}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Right: form ── */}
+            <div>
+              {status === STATUS.SUCCESS ? (
+                <div
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 16,
                     background: "var(--surface)",
                     border: "1px solid var(--border)",
                     borderLeft: "3px solid var(--red)",
-                    padding: "16px 20px",
-                    textDecoration: "none",
-                    transition: "background 0.2s, transform 0.15s",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "var(--surface2)";
-                    e.currentTarget.style.transform = "translateX(4px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "var(--surface)";
-                    e.currentTarget.style.transform = "translateX(0)";
+                    padding: "48px 32px",
+                    textAlign: "center",
                   }}
                 >
-                  <span
+                  <div
                     style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: 48,
                       color: "var(--red)",
-                      fontSize: 18,
-                      minWidth: 24,
-                      textAlign: "center",
-                      fontWeight: 600,
+                      marginBottom: 12,
                     }}
                   >
-                    {c.icon}
-                  </span>
+                    SENT!
+                  </div>
+                  <p
+                    style={{
+                      color: "var(--muted)",
+                      fontSize: 14,
+                      lineHeight: 1.7,
+                      marginBottom: 24,
+                    }}
+                  >
+                    Thanks! I'll get back to you at{" "}
+                    <strong style={{ color: "var(--text)" }}>
+                      {personal.email}
+                    </strong>{" "}
+                    soon.
+                  </p>
+                  <button
+                    className="btn-outline"
+                    onClick={() => setStatus(STATUS.IDLE)}
+                  >
+                    Send Another Message
+                  </button>
+                </div>
+              ) : (
+                <div
+                  style={{ display: "flex", flexDirection: "column", gap: 16 }}
+                >
                   <div>
                     <div
                       style={{
                         fontSize: 11,
                         color: "var(--muted)",
                         textTransform: "uppercase",
-                        letterSpacing: "0.08em",
-                        marginBottom: 2,
+                        letterSpacing: "0.1em",
+                        marginBottom: 6,
                       }}
                     >
-                      {c.label}
+                      Name
                     </div>
+                    <input
+                      type="text"
+                      placeholder="Your full name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      style={inputStyle}
+                      onFocus={handleFocus}
+                      onBlur={handleBlur}
+                      disabled={status === STATUS.SENDING}
+                    />
+                  </div>
+
+                  <div>
                     <div
                       style={{
-                        fontSize: 14,
-                        color: "var(--text)",
-                        fontWeight: 500,
+                        fontSize: 11,
+                        color: "var(--muted)",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.1em",
+                        marginBottom: 6,
                       }}
                     >
-                      {c.val}
+                      Email
                     </div>
+                    <input
+                      type="email"
+                      placeholder="your@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      style={inputStyle}
+                      onFocus={handleFocus}
+                      onBlur={handleBlur}
+                      disabled={status === STATUS.SENDING}
+                    />
                   </div>
-                </a>
-              ))}
-            </div>
-          </div>
 
-          {/* ── Right: form ── */}
-          <div>
-            {status === STATUS.SUCCESS ? (
-              <div
-                style={{
-                  background: "var(--surface)",
-                  border: "1px solid var(--border)",
-                  borderLeft: "3px solid var(--red)",
-                  padding: "48px 32px",
-                  textAlign: "center",
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: 48,
-                    color: "var(--red)",
-                    marginBottom: 12,
-                  }}
-                >
-                  SENT!
-                </div>
-                <p
-                  style={{
-                    color: "var(--muted)",
-                    fontSize: 14,
-                    lineHeight: 1.7,
-                    marginBottom: 24,
-                  }}
-                >
-                  Thanks! I'll get back to you at{" "}
-                  <strong style={{ color: "var(--text)" }}>
-                    {personal.email}
-                  </strong>{" "}
-                  soon.
-                </p>
-                <button
-                  className="btn-outline"
-                  onClick={() => setStatus(STATUS.IDLE)}
-                >
-                  Send Another Message
-                </button>
-              </div>
-            ) : (
-              <div
-                style={{ display: "flex", flexDirection: "column", gap: 16 }}
-              >
-                <div>
-                  <div
-                    style={{
-                      fontSize: 11,
-                      color: "var(--muted)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.1em",
-                      marginBottom: 6,
-                    }}
-                  >
-                    Name
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Your full name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    style={inputStyle}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    disabled={status === STATUS.SENDING}
-                  />
-                </div>
-
-                <div>
-                  <div
-                    style={{
-                      fontSize: 11,
-                      color: "var(--muted)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.1em",
-                      marginBottom: 6,
-                    }}
-                  >
-                    Email
-                  </div>
-                  <input
-                    type="email"
-                    placeholder="your@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    style={inputStyle}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    disabled={status === STATUS.SENDING}
-                  />
-                </div>
-
-                <div>
-                  <div
-                    style={{
-                      fontSize: 11,
-                      color: "var(--muted)",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.1em",
-                      marginBottom: 6,
-                    }}
-                  >
-                    Message
-                  </div>
-                  <textarea
-                    placeholder="Tell me about the opportunity..."
-                    rows={5}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    style={inputStyle}
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
-                    disabled={status === STATUS.SENDING}
-                  />
-                </div>
-
-                {status === STATUS.ERROR && (
-                  <div
-                    style={{
-                      background: "var(--red-glow)",
-                      border: "1px solid var(--red-deep)",
-                      borderLeft: "3px solid var(--red)",
-                      padding: "12px 16px",
-                      fontSize: 13,
-                      color: "var(--red)",
-                    }}
-                  >
-                    ⚠ Failed to send. Email me directly at{" "}
-                    <a
-                      href={`mailto:${personal.email}`}
+                  <div>
+                    <div
                       style={{
-                        color: "var(--red)",
-                        textDecoration: "underline",
+                        fontSize: 11,
+                        color: "var(--muted)",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.1em",
+                        marginBottom: 6,
                       }}
                     >
-                      {personal.email}
-                    </a>
+                      Message
+                    </div>
+                    <textarea
+                      placeholder="Tell me about the opportunity..."
+                      rows={5}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      style={inputStyle}
+                      onFocus={handleFocus}
+                      onBlur={handleBlur}
+                      disabled={status === STATUS.SENDING}
+                    />
                   </div>
-                )}
 
-                <button
-                  className="btn-primary"
-                  onClick={handleSubmit}
-                  disabled={status === STATUS.SENDING}
-                  style={{
-                    alignSelf: "flex-start",
-                    opacity: status === STATUS.SENDING ? 0.7 : 1,
-                    cursor:
-                      status === STATUS.SENDING ? "not-allowed" : "pointer",
-                  }}
-                >
-                  {status === STATUS.SENDING ? "Sending..." : "Send Message →"}
-                </button>
-              </div>
-            )}
+                  {status === STATUS.ERROR && (
+                    <div
+                      style={{
+                        background: "var(--red-glow)",
+                        border: "1px solid var(--red-deep)",
+                        borderLeft: "3px solid var(--red)",
+                        padding: "12px 16px",
+                        fontSize: 13,
+                        color: "var(--red)",
+                      }}
+                    >
+                      ⚠ Failed to send. Email me directly at{" "}
+                      <a
+                        href={`mailto:${personal.email}`}
+                        style={{
+                          color: "var(--red)",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        {personal.email}
+                      </a>
+                    </div>
+                  )}
+
+                  <button
+                    className="btn-primary"
+                    onClick={handleSubmit}
+                    disabled={status === STATUS.SENDING}
+                    style={{
+                      alignSelf: "flex-start",
+                      opacity: status === STATUS.SENDING ? 0.7 : 1,
+                      cursor:
+                        status === STATUS.SENDING ? "not-allowed" : "pointer",
+                    }}
+                  >
+                    {status === STATUS.SENDING
+                      ? "Sending..."
+                      : "Send Message →"}
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { skills } from "../data/portfolio";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 const categories = [
   { label: "Proficient", key: "proficient", hot: true },
@@ -27,9 +28,11 @@ function Tag({ label, hot }) {
 }
 
 export default function Skills() {
+  const ref = useScrollAnimation();
   return (
     <section id="skills">
       <div className="section-wrap">
+        <div ref={ref} className="scroll-fade">
         <div className="sec-label">02 — Skills</div>
         <div className="sec-title">TECH <span>STACK</span></div>
 
@@ -51,6 +54,7 @@ export default function Skills() {
             </div>
           ))}
         </div>
+          </div>
       </div>
     </section>
   );

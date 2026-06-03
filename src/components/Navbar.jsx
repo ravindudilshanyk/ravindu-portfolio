@@ -21,56 +21,126 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav style={{
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-      display: "flex", alignItems: "center", justifyContent: "space-between",
-      padding: "14px 64px",
-      background: scrolled ? "rgba(10,8,8,0.92)" : "transparent",
-      backdropFilter: scrolled ? "blur(14px)" : "none",
-      borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
-      transition: "all 0.3s",
-    }}>
-      <a href="#hero" style={{ fontFamily: "var(--font-display)", fontSize: 22, letterSpacing: 3, color: "var(--red)" }}>
+    <nav
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "14px 64px",
+        background: scrolled ? "rgba(10,8,8,0.92)" : "transparent",
+        backdropFilter: scrolled ? "blur(14px)" : "none",
+        borderBottom: scrolled
+          ? "1px solid var(--border)"
+          : "1px solid transparent",
+        transition: "all 0.3s",
+      }}
+    >
+      <a
+        href="#hero"
+        style={{
+          fontFamily: "var(--font-display)",
+          fontSize: 22,
+          letterSpacing: 3,
+          color: "var(--red)",
+        }}
+      >
         RDK
       </a>
 
       {/* Desktop links */}
-      <div style={{ display: "flex", gap: 32, alignItems: "center" }}
-           className="nav-desktop-links">
-        {links.map(l => (
-          <a key={l.href} href={l.href} style={{
-            color: "var(--muted)", fontSize: 12, letterSpacing: "0.1em",
-            textTransform: "uppercase", fontWeight: 500,
-            transition: "color 0.2s",
-          }}
-          onMouseEnter={e => e.target.style.color = "var(--red)"}
-          onMouseLeave={e => e.target.style.color = "var(--muted)"}>
+      <div
+        style={{ display: "flex", gap: 32, alignItems: "center" }}
+        className="nav-desktop-links"
+      >
+        {links.map((l) => (
+          <a
+            key={l.href}
+            href={l.href}
+            style={{
+              color: "var(--muted)",
+              fontSize: 12,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              fontWeight: 500,
+              transition: "color 0.2s",
+            }}
+            onMouseEnter={(e) => (e.target.style.color = "var(--red)")}
+            onMouseLeave={(e) => (e.target.style.color = "var(--muted)")}
+          >
             {l.label}
           </a>
         ))}
-        <a className="btn-primary" href={`mailto:${personal.email}`}
-           style={{ padding: "8px 20px", fontSize: 12, clipPath: "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))" }}>
+        <a
+          href="/Ravindu_Dilshan_CV.pdf"
+          download="Ravindu_Dilshan_Karunathilaka_CV.pdf"
+          className="btn-outline"
+          style={{ padding: "8px 16px", fontSize: 12 }}
+        >
+          ↓ Download CV
+        </a>
+        <a
+          className="btn-primary"
+          href={`mailto:${personal.email}`}
+          style={{
+            padding: "8px 20px",
+            fontSize: 12,
+            clipPath:
+              "polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))",
+          }}
+        >
           Hire Me
         </a>
       </div>
 
       {/* Mobile hamburger */}
-      <button onClick={() => setMenuOpen(!menuOpen)}
-        style={{ display: "none", background: "none", border: "none", color: "var(--text)", cursor: "pointer", fontSize: 22 }}
-        className="nav-hamburger">
+      <button
+        onClick={() => setMenuOpen(!menuOpen)}
+        style={{
+          display: "none",
+          background: "none",
+          border: "none",
+          color: "var(--text)",
+          cursor: "pointer",
+          fontSize: 22,
+        }}
+        className="nav-hamburger"
+      >
         {menuOpen ? "✕" : "☰"}
       </button>
 
       {menuOpen && (
-        <div style={{
-          position: "fixed", top: 56, left: 0, right: 0,
-          background: "var(--bg2)", borderBottom: "1px solid var(--border)",
-          display: "flex", flexDirection: "column", padding: "16px 20px", gap: 16,
-          zIndex: 99,
-        }}>
-          {links.map(l => (
-            <a key={l.href} href={l.href} onClick={() => setMenuOpen(false)}
-               style={{ color: "var(--muted)", fontSize: 14, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+        <div
+          style={{
+            position: "fixed",
+            top: 56,
+            left: 0,
+            right: 0,
+            background: "var(--bg2)",
+            borderBottom: "1px solid var(--border)",
+            display: "flex",
+            flexDirection: "column",
+            padding: "16px 20px",
+            gap: 16,
+            zIndex: 99,
+          }}
+        >
+          {links.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={() => setMenuOpen(false)}
+              style={{
+                color: "var(--muted)",
+                fontSize: 14,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+              }}
+            >
               {l.label}
             </a>
           ))}
