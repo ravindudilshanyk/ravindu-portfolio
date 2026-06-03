@@ -73,7 +73,7 @@ export default function Hero() {
             </a>
             <a
               className="btn-outline"
-              href="/Ravindu_Dilshan_CV.pdf"
+              href="/Ravindu_Dilshan_Karunathilaka_Software_Engineer.pdf"
               download="Ravindu_Dilshan_Karunathilaka_Software_Engineer.pdf"
               style={{ display: "flex", alignItems: "center", gap: 8 }}
             >

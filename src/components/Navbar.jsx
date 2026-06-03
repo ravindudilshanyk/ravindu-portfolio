@@ -76,8 +76,8 @@ export default function Navbar() {
           </a>
         ))}
         <a
-          href="/Ravindu_Dilshan_CV.pdf"
-          download="Ravindu_Dilshan_Karunathilaka_CV.pdf"
+          href="/Ravindu_Dilshan_Karunathilaka_Software_Engineer.pdf"
+          download="Ravindu_Dilshan_Karunathilaka_Software_Engineer.pdf"
           className="btn-outline"
           style={{ padding: "8px 16px", fontSize: 12 }}
         >
