@@ -26,29 +26,28 @@ export default function Hero() {
         }}
       />
 
-      {/* red glow — centered between columns */}
+      {/* red glow */}
       <div
         style={{
           position: "absolute",
-          left: "50%",
+          left: "55%",
           top: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 500,
-          height: 500,
+          transform: "translateY(-50%)",
+          width: 400,
+          height: 400,
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(226,75,74,0.07) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(226,75,74,0.09) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
 
-      {/* ── Full-width two-column grid ── */}
       <div className="hero-layout">
         {/* LEFT */}
         <div className="hero-left">
           <div className="hero-tag">
             <span className="hero-tag-line" />
-            Available for Internship &amp; Full Stack Developer Roles
+            Available for Internship &amp; Junior SE Roles
           </div>
 
           <h1 className="hero-name">
@@ -113,17 +112,15 @@ export default function Hero() {
               />
               <div className="hero-img-placeholder">
                 <span>RDK</span>
-                <small>place ravindu.jpg in src/assets/</small>
+                <small>place ravindu.jpg in public/</small>
               </div>
             </div>
 
-            {/* Open to Work */}
             <div className="hero-badge hero-badge-bl">
               <span className="hero-badge-dot" />
               Open to Work
             </div>
 
-            {/* Sri Lanka flag */}
             <div className="hero-badge hero-badge-tr">
               Sri Lanka{" "}
               <img
@@ -144,7 +141,6 @@ export default function Hero() {
       </div>
 
       <style>{`
-        /* ── Layout: equal halves, no fixed px column ── */
         .hero-layout {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -154,10 +150,7 @@ export default function Hero() {
           position: relative;
           z-index: 1;
         }
-
-        /* ── Left ── */
         .hero-left { display: flex; flex-direction: column; }
-
         .hero-tag {
           display: flex; align-items: center; gap: 10px;
           font-family: var(--font-mono); font-size: 11px;
@@ -168,7 +161,6 @@ export default function Hero() {
           display: inline-block; width: 32px; height: 1px;
           background: var(--red); flex-shrink: 0;
         }
-
         .hero-name {
           font-family: var(--font-display);
           font-size: clamp(48px, 6.5vw, 104px);
@@ -176,14 +168,12 @@ export default function Hero() {
           color: var(--text); margin-bottom: 2px;
         }
         .hero-name span { color: var(--red); }
-
         .hero-surname {
           font-family: var(--font-display);
           font-size: clamp(28px, 3.8vw, 60px);
           line-height: 0.9; letter-spacing: 2px;
           color: var(--text); margin-bottom: 20px;
         }
-
         .hero-role-row {
           display: flex; align-items: center; gap: 14px;
           flex-wrap: wrap; margin-bottom: 22px;
@@ -193,20 +183,14 @@ export default function Hero() {
           color: var(--muted); letter-spacing: 0.1em;
         }
         .hero-role-divider {
-          display: inline-block; width: 60px; height: 1px;
-          background: var(--border);
+          display: inline-block; width: 60px; height: 1px; background: var(--border);
         }
-        .hero-role-sub {
-          font-family: var(--font-mono); font-size: 11px; color: var(--faint);
-        }
-
+        .hero-role-sub { font-family: var(--font-mono); font-size: 11px; color: var(--faint); }
         .hero-desc {
           font-size: 14px; color: var(--muted);
           max-width: 520px; line-height: 1.8; margin-bottom: 36px;
         }
-
         .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 40px; }
-
         .hero-stats-inline {
           display: flex; border: 1px solid var(--border); width: fit-content;
         }
@@ -223,20 +207,10 @@ export default function Hero() {
           font-family: var(--font-mono); font-size: 10px;
           color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
         }
-
-        /* ── Right: photo centred in its half ── */
         .hero-right {
-          display: flex;
-          align-items: center;
-          justify-content: center;   /* true center of the right half */
+          display: flex; align-items: center; justify-content: center;
         }
-
-        .hero-photo-outer {
-          position: relative;
-          width: 340px;
-          height: 340px;
-        }
-
+        .hero-photo-outer { position: relative; width: 340px; height: 340px; }
         .hero-spin-ring {
           position: absolute; inset: -18px; border-radius: 50%;
           border: 1.5px dashed var(--red-dark);
@@ -249,41 +223,33 @@ export default function Hero() {
           pointer-events: none;
         }
         @keyframes heroSpin { to { transform: rotate(360deg); } }
-
         .hero-photo-box {
           width: 100%; height: 100%; border-radius: 50%;
           overflow: hidden; background: var(--surface);
-          border: 3px solid var(--border2);
-          position: relative; z-index: 1;
+          border: 3px solid var(--border2); position: relative; z-index: 1;
         }
         .hero-img {
           width: 100%; height: 100%; object-fit: cover;
-          object-position: center top; display: block;
-          transition: transform 0.4s ease;
+          object-position: center top; display: block; transition: transform 0.4s ease;
         }
         .hero-img:hover { transform: scale(1.04); }
-
         .hero-img-placeholder {
           display: none; flex-direction: column;
-          align-items: center; justify-content: center;
-          width: 100%; height: 100%;
+          align-items: center; justify-content: center; width: 100%; height: 100%;
         }
         .hero-img-placeholder span {
-          font-family: var(--font-display); font-size: 56px;
-          color: var(--red); opacity: 0.35;
+          font-family: var(--font-display); font-size: 56px; color: var(--red); opacity: 0.35;
         }
         .hero-img-placeholder small {
           font-family: var(--font-mono); font-size: 10px;
-          color: var(--faint); margin-top: 8px;
-          text-align: center; padding: 0 20px;
+          color: var(--faint); margin-top: 8px; text-align: center; padding: 0 20px;
         }
-
         .hero-badge {
           position: absolute;
           background: var(--surface); border: 1px solid var(--border2);
           font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", var(--font-mono);
-          font-size: 11px; color: var(--text);
-          padding: 7px 14px; white-space: nowrap; z-index: 2;
+          font-size: 11px; color: var(--text); padding: 7px 14px;
+          white-space: nowrap; z-index: 2;
           display: flex; align-items: center; gap: 7px;
           letter-spacing: 0.05em; backdrop-filter: blur(8px);
         }
@@ -294,11 +260,8 @@ export default function Hero() {
           background: var(--red); box-shadow: 0 0 6px var(--red);
           animation: pulse 2s ease-in-out infinite; flex-shrink: 0;
         }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
-        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-        /* ── Responsive ── */
         @media (max-width: 960px) {
           .hero-layout { grid-template-columns: 1fr !important; gap: 48px !important; }
           #hero { padding: 110px 40px 60px !important; }

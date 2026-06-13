@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { projects } from "../data/portfolio";
+import { projects, workExperience } from "../data/portfolio";
 
 function getYouTubeId(url) {
   if (!url) return null;
@@ -12,7 +12,11 @@ function getYouTubeId(url) {
 export default function ProjectDetail() {
   const { num } = useParams();
   const navigate = useNavigate();
-  const project = projects.find((p) => p.num === num);
+
+  // Search in both projects and workExperience
+  const project =
+    projects.find((p) => p.num === num) ||
+    workExperience.find((p) => p.slug === num);
 
   if (!project) {
     return (
@@ -39,7 +43,7 @@ export default function ProjectDetail() {
         </div>
         <div style={{ marginBottom: 24 }}>Project not found</div>
         <button className="btn-outline" onClick={() => navigate("/#projects")}>
-          ← Back to Projects
+          ← Back to Portfolio
         </button>
       </div>
     );
@@ -69,7 +73,7 @@ export default function ProjectDetail() {
         }}
       >
         <button
-          onClick={() => navigate("/#projects")}
+          onClick={() => navigate(-1)}
           style={{
             background: "none",
             border: "none",
@@ -87,7 +91,7 @@ export default function ProjectDetail() {
           onMouseEnter={(e) => (e.currentTarget.style.color = "var(--red)")}
           onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
         >
-          ← Back to Portfolio
+          ← Back
         </button>
         <div
           style={{
@@ -99,7 +103,7 @@ export default function ProjectDetail() {
         >
           RDK
         </div>
-        <div style={{ width: 140 }} /> {/* spacer */}
+        <div style={{ width: 140 }} />
       </div>
 
       <div
@@ -128,7 +132,7 @@ export default function ProjectDetail() {
                 display: "inline-block",
               }}
             />
-            {project.type} · {project.period}
+            {project.type || project.badge} · {project.period}
           </div>
 
           <h1
@@ -186,14 +190,16 @@ export default function ProjectDetail() {
 
           {/* Action buttons */}
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-            <a
-              className="btn-primary"
-              href={project.repo}
-              target="_blank"
-              rel="noreferrer"
-            >
-              View on GitHub →
-            </a>
+            {project.repo && (
+              <a
+                className="btn-primary"
+                href={project.repo}
+                target="_blank"
+                rel="noreferrer"
+              >
+                View on GitHub →
+              </a>
+            )}
             {project.demo && (
               <a
                 className="btn-outline"
@@ -236,7 +242,7 @@ export default function ProjectDetail() {
             <div
               style={{
                 position: "relative",
-                paddingBottom: "56.25%" /* 16:9 */,
+                paddingBottom: "56.25%",
                 height: 0,
                 overflow: "hidden",
                 border: "1px solid var(--border)",
@@ -278,7 +284,7 @@ export default function ProjectDetail() {
                 color: "var(--faint)",
               }}
             >
-              No demo video available for this project
+              No demo video available for this project yet
             </div>
           </div>
         )}
@@ -387,8 +393,68 @@ export default function ProjectDetail() {
               flexWrap: "wrap",
             }}
           >
+            {/* Work experience entries */}
+            {workExperience
+              .filter((p) => p.slug !== num)
+              .map((p) => (
+                <button
+                  key={p.slug}
+                  onClick={() => navigate(`/project/${p.slug}`)}
+                  style={{
+                    flex: 1,
+                    minWidth: 160,
+                    background: "var(--bg2)",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "16px 20px",
+                    textAlign: "left",
+                    transition: "background 0.2s",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.background = "var(--surface)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.background = "var(--bg2)")
+                  }
+                >
+                  <div
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 10,
+                      color: "var(--red)",
+                      marginBottom: 4,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.1em",
+                    }}
+                  >
+                    Freelance
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 13,
+                      color: "var(--text)",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {p.name}
+                  </div>
+                  {p.demo && (
+                    <div
+                      style={{
+                        fontSize: 10,
+                        color: "var(--red)",
+                        fontFamily: "var(--font-mono)",
+                        marginTop: 4,
+                      }}
+                    >
+                      ▶ has demo
+                    </div>
+                  )}
+                </button>
+              ))}
+            {/* Regular projects */}
             {projects
-              .filter((p) => p.num !== project.num)
+              .filter((p) => p.num !== num)
               .map((p) => (
                 <button
                   key={p.num}
@@ -446,6 +512,12 @@ export default function ProjectDetail() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 600px) {
+          #project-detail > div:last-child { padding: 32px 20px 64px !important; }
+        }
+      `}</style>
     </div>
   );
 }
